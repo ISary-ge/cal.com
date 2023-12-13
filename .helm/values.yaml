@@ -1,0 +1,85 @@
+dev:
+  vpbxApiUrl: https://vpbx-stage.mcn.ru/vpbx/api
+  phoneApiUrl: https://vpbx-stage.mcn.ru/phone/api
+  baseApiUrl: https://base-stage.mcn.ru/api/private/api
+  statApiUrl: https://teststat2.mcn.ru
+  referencesApiUrl: https://references-stage.mcn.ru/api/private
+  paidMethodsApiUrl: "https://paidmethods.mcn.ru/api/private/api"
+  apiAccountId: 47197
+  kafkaBrokers: '["bootstrap-kafka-stage.mcn.ru:443"]'
+  kafkaClientId: shop-dev
+  kafkaGroupId: shop-dev
+  apiReplicaCount: 1
+  schedulerReplicaCount: 1
+  keydbReplicaCount: 1
+  keydbHost: keydb-dev
+  keydbPort: 6379
+  keydbMicroserviceDb: 1
+  keydbCacheDb: 2  
+stage:
+  vpbxApiUrl: https://vpbx-stage.mcn.ru/vpbx/api
+  phoneApiUrl: https://vpbx-stage.mcn.ru/phone/api
+  baseApiUrl: https://base-stage.mcn.ru/api/private/api
+  statApiUrl: https://teststat2.mcn.ru
+  referencesApiUrl: https://references-stage.mcn.ru/api/private
+  paidMethodsApiUrl: "https://paidmethods.mcn.ru/api/private/api"
+  apiAccountId: 47197
+  kafkaBrokers: '["kafka-stage-kafka-bootstrap.kafka-broker:9092"]'
+  kafkaClientId: shop-stage
+  kafkaGroupId: shop-stage
+  apiReplicaCount: 1
+  schedulerReplicaCount: 1
+  keydbReplicaCount: 1
+  keydbHost: keydb-stage
+  keydbPort: 6379
+  keydbMicroserviceDb: 1
+  keydbCacheDb: 2
+prod:
+  vpbxApiUrl: https://vpbx.mcn.ru/vpbx/api
+  phoneApiUrl: https://vpbx.mcn.ru/phone/api
+  baseApiUrl: https://base.mcn.ru/api/private/api
+  statApiUrl: http://stat-backend-prod-ru.stat-prod.svc.cluster.local
+  referencesApiUrl: https://references.mcn.ru/api/private
+  paidMethodsApiUrl: "https://paidmethods.mcn.ru/api/private/api"
+  apiAccountId: 47197
+  kafkaBrokers: '["broker-0.kafka2.mcn.ru:443","broker-1.kafka2.mcn.ru:443","broker-2.kafka2.mcn.ru:443"]'
+  kafkaClientId: shop
+  kafkaGroupId: shop
+  apiReplicaCount: 3
+  keydbReplicaCount: 3
+  keydbHost: keydb-prod
+  keydbPort: 6379
+  schedulerReplicaCount: 1
+  keydbMicroserviceDb: 1
+  keydbCacheDb: 2
+  kafkaSecrets:
+    - name: KAFKA_KEY
+      secretName: prod-cluster-connect-tls-secret
+      secretKey: tls.key
+    - name: KAFKA_CRT
+      secretName: prod-cluster-connect-tls-secret
+      secretKey: tls.crt
+  additionalDomains:
+    - .mcnmobile.ru
+    - .cpass.tech
+euprod:
+  vpbxApiUrl: https://vpbx.kompaas.tech/vpbx/api
+  phoneApiUrl: https://vpbx.kompaas.tech/phone/api
+  baseApiUrl: https://base.kompaas.tech/api/private/api
+  paidMethodsUrl: "https://paidmethods.kompaas.tech/api/private/api"
+  apiAccountId: 45582
+  kafkaBrokers: '["mcn-kafka-cluster-eu-kafka-bootstrap.kafka:9092"]'
+  kafkaClientId: shop
+  kafkaGroupId: shop
+  statApiUrl: http://stat-backend-prod-eu.stat-prod.svc.cluster.local
+  referencesApiUrl: https://references.kompaas.tech/api/private
+  keydbHost: keydb-euprod
+  keydbPort: 6379
+  apiReplicaCount: 3
+  schedulerReplicaCount: 1
+  keydbReplicaCount: 3
+  keydbMicroserviceDb: 1
+  keydbCacheDb: 2
+  additionalDomains:
+    - .myinno.net
+    - .cpaas.world

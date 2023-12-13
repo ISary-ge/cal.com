@@ -1,0 +1,31 @@
+{{- $domains := index .Values "dns" | default list -}}
+{{- $hosts := list -}}
+{{- if or (eq .Values.global.env "prod") (eq .Values.global.env "euprod")}}
+{{- range $domains }}
+    {{- $hostParts :=  splitList "." .prod | list | first | reverse -}}
+    {{- $hosts = append $hosts (printf "%s.%s.%s" (env "APPNAME") (index $hostParts 1) (index $hostParts 0) ) }}
+{{- end }}
+{{- end }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Chart.Name }}-ingress-private
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: {{ .Values.ci_url }}
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name:  {{ .Chart.Name }}-web
+            port:
+              number:  3000
+---
