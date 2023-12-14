@@ -1,4 +1,4 @@
-// require("dotenv").config({ path: "../../.env" });
+require("dotenv").config({ path: "../../.env" });
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const os = require("os");
 const englishTranslation = require("./public/static/locales/en/common.json");
@@ -14,9 +14,9 @@ const {
 } = require("./pagesAndRewritePaths");
 
 if (!process.env.NEXTAUTH_SECRET){ 
-  throw new Error(`Please set NEXTAUTH_SECRET \n - ${JSON.stringify(process.env)}`)
+  // throw new Error(`Please set NEXTAUTH_SECRET \n - ${JSON.stringify(process.env)}`)
 };
-if (!process.env.CALENDSO_ENCRYPTION_KEY) throw new Error("Please set CALENDSO_ENCRYPTION_KEY");
+// if (!process.env.CALENDSO_ENCRYPTION_KEY) throw new Error("Please set CALENDSO_ENCRYPTION_KEY");
 const isOrganizationsEnabled =
   process.env.ORGANIZATIONS_ENABLED === "1" || process.env.ORGANIZATIONS_ENABLED === "true";
 // To be able to use the version in the app without having to import package.json
@@ -37,9 +37,9 @@ if (
   process.env.CSP_POLICY === "strict" &&
   (process.env.CALCOM_ENV === "production" || process.env.NODE_ENV === "production")
 ) {
-  throw new Error(
-    "Strict CSP policy(for style-src) is not yet supported in production. You can experiment with it in Dev Mode"
-  );
+  // throw new Error(
+  //   "Strict CSP policy(for style-src) is not yet supported in production. You can experiment with it in Dev Mode"
+  // );
 }
 
 if (!process.env.EMAIL_FROM) {
@@ -50,7 +50,7 @@ if (!process.env.EMAIL_FROM) {
   );
 }
 
-if (!process.env.NEXTAUTH_URL) throw new Error("Please set NEXTAUTH_URL");
+// if (!process.env.NEXTAUTH_URL) throw new Error("Please set NEXTAUTH_URL");
 
 const validJson = (jsonString) => {
   try {

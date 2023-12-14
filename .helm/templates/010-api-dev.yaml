@@ -23,6 +23,8 @@ spec:
         - configMapRef:
             name: config-values
         volumeMounts:
+        - mountPath: /workspace/calendar/.env
+          name: config-volume
         - mountPath: /workspace
           name: workspace
         - name: id-rsa-vcs
@@ -32,6 +34,9 @@ spec:
       - name: workspace
         hostPath:
           path: /.volumes/calendar-api-dev-workspace
+      - configMap:
+          name: config-values
+        name: config-volume
       - name: id-rsa-vcs
         secret:
           secretName: id-rsa-vcs
