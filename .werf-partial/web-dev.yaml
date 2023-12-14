@@ -1,7 +1,7 @@
 {{- if or (eq .env "dev") }}
 ---
 image: {{ .project }}-web-{{ .env }}
-from: node:18
+from: node:20-alpine
 git:
 - add: /
   to: /workspace/calendar
@@ -11,19 +11,25 @@ git:
     install:
     - "package.json"
     - "package-lock.json"
+    - "yarn.lock"
+    - ".yarnrc.yml"
+    - "playwright.config.ts"
+    - "turbo.json"
+    - "git-init.sh"
+    - "git-setup.sh"
 ansible:
   install:
   - name: "Install yarn"
-    shell: npm install yarn
+    shell: npx turbo prune --scope=@calcom/web --docker
     args:
      chdir: /workspace/calendar
   - name: "Install libs"
-    shell: yarn add
+    shell: yarn install
     args:
      chdir: /workspace/calendar
   setup:
   - name: "Compile"
-    shell: npm run build --scope=@calcom/web
+    shell: yarn turbo run build --filter=@calcom/web
     args:
      chdir: /workspace/calendar
 docker:
