@@ -23,16 +23,16 @@ spec:
         - configMapRef:
             name: config-values
         volumeMounts:
-        - mountPath: /workspace
-          name: workspace
         - name: id-rsa-vcs
           mountPath: "/root/.ssh/id_rsa"
           subPath: "id_rsa" 
+        - mountPath: /workspace
+          name: workspace 
       volumes:
       - name: workspace
         hostPath:
           path: /.volumes/calendar-web-dev-workspace
-      - name: id-rsa-vcs
+     - name: id-rsa-vcs
         secret:
           secretName: id-rsa-vcs
           defaultMode: 0600
@@ -49,9 +49,7 @@ spec:
     app: {{ .Chart.Name }}-web-dev
   ports:
   - name: {{ .Chart.Name }}-web-dev
-    port: 80
+    port: 3000
     protocol: TCP
-
 {{- else }}
-
 {{- end }}

@@ -1,4 +1,4 @@
-{{- if or (eq .env "dev") }}
+{{- if or (eq .env "dev1") }}
 ---
 image: {{ .project }}-api-{{ .env }}
 from: node:20-alpine
@@ -32,8 +32,12 @@ ansible:
     shell: yarn turbo run build --filter=@calcom/api
     args:
      chdir: /workspace/calendar
+  - name: "ls calendar"
+    shell: ls -al /workspace/calendar
+    args:
+     chdir: /workspace/calendar
 docker:
   WORKDIR: /workspace/calendar
-  EXPOSE: ["3000"]
+  EXPOSE: ["80"]
   ENTRYPOINT: "npm run start --scope=@calcom/api"
 {{- end }}

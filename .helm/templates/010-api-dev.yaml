@@ -1,4 +1,4 @@
-{{- if  (eq .Values.global.env "dev") }}
+{{- if  (eq .Values.global.env "dev1") }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -22,25 +22,16 @@ spec:
         envFrom:
         - configMapRef:
             name: config-values
-        volumeMounts:
-        - mountPath: /workspace/calendar/.env
-          name: config-volume
-        - mountPath: /workspace
-          name: workspace
-        - name: id-rsa-vcs
-          mountPath: "/root/.ssh/id_rsa"
-          subPath: "id_rsa" 
-      volumes:
-      - name: workspace
-        hostPath:
-          path: /.volumes/calendar-api-dev-workspace
-      - configMap:
-          name: config-values
-        name: config-volume
-      - name: id-rsa-vcs
-        secret:
-          secretName: id-rsa-vcs
-          defaultMode: 0600
+        # volumeMounts:
+      #   - mountPath: /workspace
+      #     name: workspace 
+      # volumes:
+      # - name: workspace
+      #   hostPath:
+      #     path: /.volumes/workspace-{{ .Chart.Name }}-api
+      # - configMap:
+      #     name: config-values
+      #   name: config-volume
 ---
 apiVersion: v1
 kind: Service

@@ -1,0 +1,56 @@
+{{- if or (eq .Values.global.env "prod22")}}
+{{- $dns := index .Values "dns" | default list -}}
+{{- $hosts := list -}}
+{{- $domains := list -}}
+{{- if or (eq .Values.global.env "prod") (eq .Values.global.env "euprod")}}
+{{- range $dns }}
+    {{- $hostParts :=  splitList "." .prod | list | first | reverse -}}
+    {{- $domains = append $domains (printf "%s.%s" (index $hostParts 1) (index $hostParts 0) )}}
+    {{- $hosts = append $hosts (printf "%s.%s.%s" (env "APPNAME") (index $hostParts 1) (index $hostParts 0) ) }}
+{{- end }}
+{{- end }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Chart.Name }}-ingress-protected
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: 100m
+    nginx.ingress.kubernetes.io/auth-method: "GET"
+    nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
+    nginx.ingress.kubernetes.io/auth-url: http://base-service-smallauth.base-{{ .Values.global.env }}.svc.cluster.local/auth-public
+    nginx.ingress.kubernetes.io/auth-response-headers: "MCN-ACCOUNT-ID, MCN-USER-ID, MCN-USER-LANG, MCN-SUPPORT-USER-ID"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+    ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      if ($http_origin ~ '^https:\/\/(.*)?\.?({{ print (join "|" (prepend $domains (env "DOMAIN"))) }})$' ) {
+        more_set_headers "Access-Control-Allow-Origin: $http_origin";
+        more_set_headers "Access-Control-Allow-Credentials: true";
+      }
+      if ($request_method = 'OPTIONS') {
+        add_header 'Access-Control-Allow-Origin' "$http_origin" always;
+        add_header 'Access-Control-Allow-Credentials' "true" always;
+        add_header 'Access-Control-Allow-Methods' "PUT, GET, POST, DELETE, OPTIONS, PATCH" always;
+        add_header 'Access-Control-Allow-Headers' "DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization" always;
+        add_header 'Access-Control-Max-Age' 1728000 always;
+        return 204;
+      }
+spec:
+  rules:
+  {{- range prepend $hosts .Values.ci_url  }}
+  - host: {{ . }}
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name:  {{ .Chart.Name }}-service-web
+            port:
+              number:  3000
+  {{- end }}
+---
+{{- end }}

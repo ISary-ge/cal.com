@@ -1,40 +1,37 @@
-{{- if or (eq .env "dev") }}
+{{- if (eq .env "dev") }}
+---
+image: {{ .project }}-{{ .env }}
+from: node:20
+docker:
+  WORKDIR: /workspace/
+  USER: root
+  EXPOSE: "3000"
+ansible:
+ install:
+ - name: Setting up ssh
+   shell: |
+     printf "Host github.com\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n" >> /etc/ssh/ssh_config
+ - name: "Install additional packages"
+   apt:
+     state: present
+     update_cache: yes
+     pkg:
+       - locales
+       - mc
+       - vim
+       - neovim
+       - git
+ - name: StrictHostKeyChecking no
+   shell: |
+     printf "Host github.com\n\tStrictHostKeyChecking no\n\tUserKnownHostsFile=/dev/null\n" >> /etc/ssh/ssh_config
 ---
 image: {{ .project }}-web-{{ .env }}
-from: node:20-alpine
+fromImage: {{ .project }}-{{ .env }}
 git:
-- add: /
-  to: /workspace/calendar
-  stageDependencies:
-    setup:
-    - "*/**"
-    install:
-    - "package.json"
-    - "package-lock.json"
-    - "yarn.lock"
-    - ".yarnrc.yml"
-    - "playwright.config.ts"
-    - "turbo.json"
-    - "git-init.sh"
-    - "git-setup.sh"
-ansible:
-  install:
-  - name: "Install yarn"
-    shell: npx turbo prune --scope=@calcom/web --docker
-    args:
-     chdir: /workspace/calendar
-  - name: "Install libs"
-    shell: yarn add && yarn install
-    args:
-     chdir: /workspace/calendar
-  setup:
-  - name: "Compile"
-    shell: yarn turbo run build --filter=@calcom/web
-    args:
-     chdir: /workspace/calendar
+- add: /scripts/prepare-scripts
+  to: /install/prepare-scripts
 docker:
-  WORKDIR: /workspace/calendar
-  EXPOSE: ["3000"]
-  ENTRYPOINT: "npm run start --scope=@calcom/web"
+  CMD: ["/bin/sleep", "infinity"]
+  WORKDIR: /workspace
+---
 {{- end }}
-
