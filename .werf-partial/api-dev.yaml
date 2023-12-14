@@ -24,7 +24,7 @@ ansible:
     args:
      chdir: /workspace/calendar
   - name: "Install libs"
-    shell: yarn install
+    shell: yarn add && yarn install
     args:
      chdir: /workspace/calendar
   setup:
