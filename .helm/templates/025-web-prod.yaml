@@ -37,7 +37,7 @@ spec:
         env:
         envFrom:
         - configMapRef:
-            name: {{ .Chart.Name }}-common-config   
+            name: config-values   
 ---
 apiVersion: v1
 kind: Service

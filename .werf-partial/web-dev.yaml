@@ -1,0 +1,34 @@
+{{- if or (eq .env "dev") }}
+---
+image: {{ .project }}-web-{{ .env }}
+from: node:18
+git:
+- add: /
+  to: /workspace/calendar
+  stageDependencies:
+    setup:
+    - "*/**"
+    install:
+    - "package.json"
+    - "package-lock.json"
+ansible:
+  install:
+  # - name: "Install yarn"
+  #   shell: npm install -g yarn
+  #   args:
+  #    chdir: /workspace/calendar
+  - name: "Install libs"
+    shell: yarn add
+    args:
+     chdir: /workspace/calendar
+  setup:
+  - name: "Compile"
+    shell: npm run build --scope=@calcom/web
+    args:
+     chdir: /workspace/calendar
+docker:
+  WORKDIR: /workspace/calendar
+  EXPOSE: ["3000"]
+  ENTRYPOINT: "npm run start --scope=@calcom/web"
+{{- end }}
+

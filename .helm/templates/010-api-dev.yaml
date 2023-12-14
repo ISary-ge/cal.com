@@ -21,7 +21,7 @@ spec:
 {{ tuple "calendar-api-dev" . | include "werf_container_image" | indent 8 }}
         envFrom:
         - configMapRef:
-            name: {{ .Chart.Name }}-common-config
+            name: config-values
         volumeMounts:
         - mountPath: /workspace
           name: workspace

@@ -13,7 +13,9 @@ const {
   orgUserTypeEmbedRoutePath,
 } = require("./pagesAndRewritePaths");
 
-if (!process.env.NEXTAUTH_SECRET) throw new Error("Please set NEXTAUTH_SECRET");
+if (!process.env.NEXTAUTH_SECRET){ 
+  throw new Error(`Please set NEXTAUTH_SECRET \n - ${JSON.stringify(process.env)}`)
+};
 if (!process.env.CALENDSO_ENCRYPTION_KEY) throw new Error("Please set CALENDSO_ENCRYPTION_KEY");
 const isOrganizationsEnabled =
   process.env.ORGANIZATIONS_ENABLED === "1" || process.env.ORGANIZATIONS_ENABLED === "true";

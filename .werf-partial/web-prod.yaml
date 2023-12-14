@@ -14,7 +14,7 @@ git:
 ansible:
   install:
   - name: "Install libs"
-    shell: npm i
+    shell: npx yarn add
     args:
      chdir: /workspace/calendar
   setup:
@@ -26,3 +26,4 @@ docker:
   WORKDIR: /workspace/calendar
   EXPOSE: ["3000"]
   ENTRYPOINT: "npm run start --scope=@calcom/web"
+{{- end }}

@@ -1,0 +1,13 @@
+{{ $_ := set . "project" "calendar" }}
+
+project: {{ .project }}
+configVersion: 1
+deploy:
+  namespace: {{ env "NAMESPACE" }}-{{ env "ENVNAME" }}
+  namespaceSlug: false
+
+{{ $_ := env "ENVNAME" | set . "env" }}
+---
+{{ range $path, $content := .Files.Glob ".werf-partial/*.yaml" }}
+{{ tpl $content $ }}
+{{ end }}
