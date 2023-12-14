@@ -13,10 +13,10 @@ git:
     - "package-lock.json"
 ansible:
   install:
-  # - name: "Install yarn"
-  #   shell: npm install -g yarn
-  #   args:
-  #    chdir: /workspace/calendar
+  - name: "Install yarn"
+    shell: npm install yarn
+    args:
+     chdir: /workspace/calendar
   - name: "Install libs"
     shell: yarn add
     args:
