@@ -7,13 +7,13 @@ dev:
   upstashRedisRestToken: ""
   insightsDatabaseUrl: ""
   PRISMA_GENERATE_DATAPROXY: ""
-  NEXT_PUBLIC_WEBAPP_URL: 'http://localhost:3000'
+  NEXT_PUBLIC_WEBAPP_URL: 'http://calendar-dev.mcn.loc'
   NEXT_PUBLIC_WEBSITE_URL: 'http://calendar-dev.mcn.loc'
   NEXT_PUBLIC_CONSOLE_URL: 'http://localhost:3004'
-  NEXT_PUBLIC_EMBED_LIB_URL: 'http://localhost:3000/embed/embed.js'
+  NEXT_PUBLIC_EMBED_LIB_URL: 'http://calendar-dev.mcn.loc/embed/embed.js'
   ALLOWED_HOSTNAMES: '"mcn.ru","mcn.loc", "localhost:3000"'
   RESERVED_SUBDOMAINS: '"app","auth","docs","design","console","go","status","api","saml","www","matrix","developer","cal","my","team","support","security","blog", "calendar-dev","learn","admin"'
-  NEXTAUTH_URL: 'http://localhost:3000'
+  NEXTAUTH_URL: 'http://calendar-dev.mcn.loc'
   NEXTAUTH_COOKIE_DOMAIN: ''
   CALCOM_TELEMETRY_DISABLED: ''
   CRON_API_KEY: '0cc0e6c35519bba620c9360cfe3e68d0'
