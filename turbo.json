@@ -36,7 +36,11 @@
         "NEXT_PUBLIC_WEBSITE_URL",
         "STRIPE_PREMIUM_PLAN_PRODUCT_ID",
         "STRIPE_TEAM_MONTHLY_PRICE_ID",
-        "STRIPE_ORG_MONTHLY_PRICE_ID"
+        "STRIPE_ORG_MONTHLY_PRICE_ID",
+        "MCN_USER_ID",
+        "MCN-USER-ID",
+        "mcn_user_id",
+        "mcn-user-id"
       ]
     },
     "@calcom/web#dx": {
@@ -58,7 +62,11 @@
         "NODE_ENV",
         "OPENAI_API_KEY",
         "SENDGRID_API_KEY",
-        "DATABASE_URL"
+        "DATABASE_URL",
+        "MCN_USER_ID",
+        "MCN-USER-ID",
+        "mcn_user_id",
+        "mcn-user-id"
       ]
     },
     "@calcom/website#build": {
@@ -87,7 +95,11 @@
         "STRIPE_SUPPORT_TABLE",
         "MOTIFLAND_REST_ENDPOINT",
         "MOTIFLAND_DOCS_API_KEY",
-        "MOTIFLAND_DOCS_PROJECT_ID"
+        "MOTIFLAND_DOCS_PROJECT_ID",
+        "MCN_USER_ID",
+        "MCN-USER-ID",
+        "mcn_user_id",
+        "mcn-user-id"
       ]
     },
     "build": {
@@ -344,6 +356,10 @@
     "ZOHOCRM_CLIENT_SECRET",
     "ZOOM_CLIENT_ID",
     "ZOOM_CLIENT_SECRET",
-    "RESEND_API_KEY"
+    "RESEND_API_KEY",
+    "MCN_USER_ID",
+    "MCN-USER-ID",
+    "mcn_user_id",
+    "mcn-user-id"
   ]
 }

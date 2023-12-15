@@ -1,0 +1,86 @@
+{{- if  (eq .Values.global.env "dev") }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}-service-pg
+spec:
+  selector:
+    app: {{ .Chart.Name }}-pg-dev
+  ports:
+    - name: {{ .Chart.Name }}-pg-dev
+      protocol: TCP
+      port: 5450
+      targetPort: 5432
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Chart.Name }}-pg-dev
+  labels: 
+    app: {{ .Chart.Name }}-pg-dev
+  annotations:
+    werf.io/weight: "0"
+spec:
+  replicas: 1
+  serviceName: {{ .Chart.Name }}-pg-dev
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}-pg-dev
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-pg-dev
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-pg-dev
+        image: postgres:14
+        env:
+        - name: POSTGRES_DB
+          value: "calendso"
+        - name: POSTGRES_PASSWORD
+          value: ""
+        - name: POSTGRES_HOST_AUTH_METHOD
+          value: trust       
+        ports:
+        - name: {{ .Chart.Name }}-pg-dev
+          containerPort: 5432
+          protocol: TCP  
+---
+{{- if  (eq .Values.global.env "dev1") }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: init-db
+  annotations:
+    werf.io/weight: "10"
+spec:
+  template:
+    spec:
+      containers:
+      - name: init-db
+        image: "werf-registry.kube-system.svc.cluster.local/calendar-prisma-dev:1.000"
+        command: ["npm", "run" , "db-deploy"]
+        env: 
+        - name: DATABASE_URL
+          value: "postgresql://postgres:@calendar-service-pg.calendar-dev.svc.cluster.local:5450/calendso"
+      restartPolicy: Never
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: seed-db
+  annotations:
+    werf.io/weight: "20"
+spec:
+  template:
+    spec:
+      containers:
+      - name: init-db
+{{ tuple "calendar-prisma-dev" . | include "werf_container_image" | indent 8 }}
+        command: ["yarn", "workspace" , "@calcom/prisma", "db-seed"]
+        env: 
+        - name: DATABASE_URL
+          value: "postgresql://postgres:@calendar-service-pg.calendar-dev.svc.cluster.local:5450/calendso"
+      restartPolicy: Never
+{{- end }}
+{{- end }}

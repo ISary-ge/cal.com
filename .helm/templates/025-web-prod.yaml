@@ -1,0 +1,57 @@
+{{- if  (eq .Values.global.env "dev") }}
+{{- else }}
+{{- $replicaCount := index .Values (env "ENVNAME") "replicaCount" -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-web-prod
+  labels:
+    app: {{ .Chart.Name }}-web-prod
+spec:
+  replicas: {{ $replicaCount }}
+  selector:
+      matchLabels:
+        app: {{ .Chart.Name }}-web-prod
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-web-prod
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - {{ .Chart.Name }}-web
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: {{ .Chart.Name }}-web-prod
+{{ tuple "calendar-web-prod" . | include "werf_container_image" | indent 8 }}
+        env:
+        envFrom:
+        - configMapRef:
+            name: config-values   
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}-service-web
+  labels:
+    app: {{ .Chart.Name }}-service-web
+spec:
+  selector:
+    app: {{ .Chart.Name }}-web-prod
+  ports:
+  - name: {{ .Chart.Name }}-web-prod
+    port: 80
+    protocol: TCP
+
+
+{{- end }}

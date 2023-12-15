@@ -1,0 +1,53 @@
+{{- if  (eq .Values.global.env "dev1") }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Chart.Name }}-api-dev
+  labels:
+    app: {{ .Chart.Name }}-api-dev
+spec:
+  replicas: 1
+  serviceName: {{ .Chart.Name }}-api-dev
+  selector:
+      matchLabels:
+        app: {{ .Chart.Name }}-api-dev
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-api-dev
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}-api-dev
+{{ tuple "calendar-api-dev" . | include "werf_container_image" | indent 8 }}
+        envFrom:
+        - configMapRef:
+            name: config-values
+        # volumeMounts:
+      #   - mountPath: /workspace
+      #     name: workspace 
+      # volumes:
+      # - name: workspace
+      #   hostPath:
+      #     path: /.volumes/workspace-{{ .Chart.Name }}-api
+      # - configMap:
+      #     name: config-values
+      #   name: config-volume
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}-service-api
+  labels:
+    app: {{ .Chart.Name }}-service-api
+spec:
+  clusterIP: None
+  selector:
+    app: {{ .Chart.Name }}-api-dev
+  ports:
+  - name: {{ .Chart.Name }}-api-dev
+    port: 80
+    protocol: TCP
+
+{{- else }}
+
+{{- end }}

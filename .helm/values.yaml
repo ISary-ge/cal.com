@@ -1,0 +1,98 @@
+dev:
+  nextauthSecret: "FqU+PtBMpUiAHvICKvMuV8bu4MOFdZC0Mv7On9qxIVw="
+  calendsoEncryptionKey: "FqU+PtBMpUiAHvICKvMuV8bu4MOFdZC0Mv7On9qxIVw="
+  calcomLicenseKey: ""
+  databaseUrl: "postgresql://postgres:@calendar-service-pg.calendar-dev.svc.cluster.local:5450/calendso"
+  upstashRedisRestUrl: ""
+  upstashRedisRestToken: ""
+  insightsDatabaseUrl: ""
+  PRISMA_GENERATE_DATAPROXY: ""
+  NEXT_PUBLIC_WEBAPP_URL: 'http://calendar-dev.mcn.loc'
+  NEXT_PUBLIC_WEBSITE_URL: 'http://calendar-dev.mcn.loc'
+  NEXT_PUBLIC_CONSOLE_URL: 'http://localhost:3004'
+  NEXT_PUBLIC_EMBED_LIB_URL: 'http://calendar-dev.mcn.loc/embed/embed.js'
+  ALLOWED_HOSTNAMES: '"mcn.ru","mcn.loc", "localhost:3000"'
+  RESERVED_SUBDOMAINS: '"app","auth","docs","design","console","go","status","api","saml","www","matrix","developer","cal","my","team","support","security","blog", "calendar-dev","learn","admin"'
+  NEXTAUTH_URL: 'http://calendar-dev.mcn.loc'
+  NEXTAUTH_COOKIE_DOMAIN: ''
+  CALCOM_TELEMETRY_DISABLED: ''
+  CRON_API_KEY: '0cc0e6c35519bba620c9360cfe3e68d0'
+  CRON_ENABLE_APP_SYNC: false
+  NEXT_PUBLIC_INTERCOM_APP_ID: ""
+  GOOGLE_LOGIN_ENABLED: false
+  EMAIL_FROM: 'notifications@yourselfhostedcal.com'
+  EMAIL_SERVER_HOST: 'localhost'
+  EMAIL_SERVER_PORT: 1025
+  NEXT_PUBLIC_APP_NAME: "Cal.com"
+  NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS: "help@cal.com"
+  NEXT_PUBLIC_COMPANY_NAME: "Mcn.ru, Inc."
+stage:
+  vpbxApiUrl: https://vpbx-stage.mcn.ru/vpbx/api
+  phoneApiUrl: https://vpbx-stage.mcn.ru/phone/api
+  baseApiUrl: https://base-stage.mcn.ru/api/private/api
+  statApiUrl: https://teststat2.mcn.ru
+  referencesApiUrl: https://references-stage.mcn.ru/api/private
+  paidMethodsApiUrl: "https://paidmethods.mcn.ru/api/private/api"
+  apiAccountId: 47197
+  kafkaBrokers: '["kafka-stage-kafka-bootstrap.kafka-broker:9092"]'
+  kafkaClientId: shop-stage
+  kafkaGroupId: shop-stage
+  apiReplicaCount: 1
+  schedulerReplicaCount: 1
+  keydbReplicaCount: 1
+  keydbHost: keydb-stage
+  keydbPort: 6379
+  keydbMicroserviceDb: 1
+  keydbCacheDb: 2
+  nextauthSecret: "FqU+PtBMpUiAHvICKvMuV8bu4MOFdZC0Mv7On9qxIVw="
+  DATABASE_URL: "postgresql://platforma:0w3Jb1rmA6WssJUy@eridanus4.mcn.ru:5432/calendso"
+prod:
+  vpbxApiUrl: https://vpbx.mcn.ru/vpbx/api
+  phoneApiUrl: https://vpbx.mcn.ru/phone/api
+  baseApiUrl: https://base.mcn.ru/api/private/api
+  statApiUrl: http://stat-backend-prod-ru.stat-prod.svc.cluster.local
+  referencesApiUrl: https://references.mcn.ru/api/private
+  paidMethodsApiUrl: "https://paidmethods.mcn.ru/api/private/api"
+  apiAccountId: 47197
+  kafkaBrokers: '["broker-0.kafka2.mcn.ru:443","broker-1.kafka2.mcn.ru:443","broker-2.kafka2.mcn.ru:443"]'
+  kafkaClientId: shop
+  kafkaGroupId: shop
+  apiReplicaCount: 3
+  keydbReplicaCount: 3
+  keydbHost: keydb-prod
+  keydbPort: 6379
+  schedulerReplicaCount: 1
+  nextauthSecret: "FqU+PtBMpUiAHvICKvMuV8bu4MOFdZC0Mv7On9qxIVw="
+  keydbMicroserviceDb: 1
+  keydbCacheDb: 2
+  kafkaSecrets:
+    - name: KAFKA_KEY
+      secretName: prod-cluster-connect-tls-secret
+      secretKey: tls.key
+    - name: KAFKA_CRT
+      secretName: prod-cluster-connect-tls-secret
+      secretKey: tls.crt
+  additionalDomains:
+    - .mcnmobile.ru
+    - .cpass.tech
+euprod:
+  vpbxApiUrl: https://vpbx.kompaas.tech/vpbx/api
+  phoneApiUrl: https://vpbx.kompaas.tech/phone/api
+  baseApiUrl: https://base.kompaas.tech/api/private/api
+  paidMethodsUrl: "https://paidmethods.kompaas.tech/api/private/api"
+  apiAccountId: 45582
+  kafkaBrokers: '["mcn-kafka-cluster-eu-kafka-bootstrap.kafka:9092"]'
+  kafkaClientId: shop
+  kafkaGroupId: shop
+  statApiUrl: http://stat-backend-prod-eu.stat-prod.svc.cluster.local
+  referencesApiUrl: https://references.kompaas.tech/api/private
+  keydbHost: keydb-euprod
+  keydbPort: 6379
+  apiReplicaCount: 3
+  schedulerReplicaCount: 1
+  keydbReplicaCount: 3
+  keydbMicroserviceDb: 1
+  keydbCacheDb: 2
+  additionalDomains:
+    - .myinno.net
+    - .cpaas.world

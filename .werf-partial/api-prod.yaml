@@ -1,0 +1,29 @@
+{{- if or (eq .env "stage") (eq .env "prod") (eq .env "euprod") }}
+---
+image: {{ .project }}-api-{{ .env }}
+from: node:18
+git:
+- add: /
+  to: /workspace/calendar
+  stageDependencies:
+    setup:
+    - "*/**"
+    install:
+    - "package.json"
+    - "package-lock.json"
+ansible:
+  install:
+  - name: "Install libs"
+    shell: npx yarn add
+    args:
+     chdir: /workspace/calendar
+  setup:
+  - name: "Compile"
+    shell: npm run build --scope=@calcom/api
+    args:
+     chdir: /workspace/calendar
+docker:
+  WORKDIR: /workspace/calendar
+  EXPOSE: ["3000"]
+  ENTRYPOINT: "npm run start --scope=@calcom/api"
+{{- end }}

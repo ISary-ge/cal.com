@@ -1,0 +1,43 @@
+{{- if or (eq .env "dev1") }}
+---
+image: {{ .project }}-api-{{ .env }}
+from: node:20-alpine
+git:
+- add: /
+  to: /workspace/calendar
+  stageDependencies:
+    setup:
+    - "*/**"
+    install:
+    - "package.json"
+    - "package-lock.json"
+    - "yarn.lock"
+    - ".yarnrc.yml"
+    - "playwright.config.ts"
+    - "turbo.json"
+    - "git-init.sh"
+    - "git-setup.sh"
+ansible:
+  install:
+  - name: "Install yarn"
+    shell: npx turbo prune --scope=@calcom/api --docker
+    args:
+     chdir: /workspace/calendar
+  - name: "Install libs"
+    shell: yarn add && yarn install
+    args:
+     chdir: /workspace/calendar
+  setup:
+  - name: "Compile"
+    shell: yarn turbo run build --filter=@calcom/api
+    args:
+     chdir: /workspace/calendar
+  - name: "ls calendar"
+    shell: ls -al /workspace/calendar
+    args:
+     chdir: /workspace/calendar
+docker:
+  WORKDIR: /workspace/calendar
+  EXPOSE: ["80"]
+  ENTRYPOINT: "npm run start --scope=@calcom/api"
+{{- end }}
