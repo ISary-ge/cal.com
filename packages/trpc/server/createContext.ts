@@ -72,7 +72,11 @@ export const createContext = async ({ req, res }: CreateContextOptions, sessionG
   // TODO: @sean - figure out a way to make getIP be happy with trpc req. params
   const sourceIp = getIP(req as NextApiRequest);
   const session = !!sessionGetter ? await getServerSession({ req, res }) : null;
-  console.log('SESSION', session)
+  console.log('SESSION contextInner', {
+    prisma,
+    insightsDb: readonlyPrisma,
+    ...{ locale, session, sourceIp },
+  });
   const contextInner = await createContextInner({ locale, session, sourceIp });
   return {
     ...contextInner,

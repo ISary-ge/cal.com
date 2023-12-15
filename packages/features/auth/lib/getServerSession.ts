@@ -32,7 +32,6 @@ export async function getServerSession(options: {
 
   const token = req.cookies["mcn_uid"];
   const userId = +(req.headers["mcn-user-id"] as string);
-  console.log('USERID', userId);
   if (!token) {
     return null;
   }
@@ -50,6 +49,7 @@ export async function getServerSession(options: {
     // TODO: Re-enable once we get confirmation from compliance that this is okay.
     // cacheStrategy: { ttl: 60, swr: 1 },
   });
+
 
   if (!user) {
     return null;
@@ -75,6 +75,9 @@ export async function getServerSession(options: {
       locale: undefined,
     },
   };
+
+  console.log('SESSIOOON', session);
+
 
   CACHE.set(JSON.stringify(token), session);
 
