@@ -1,4 +1,3 @@
-{{- if or (eq .Values.global.env "prod22")}}
 {{- $dns := index .Values "dns" | default list -}}
 {{- $hosts := list -}}
 {{- $domains := list -}}
@@ -53,4 +52,3 @@ spec:
               number:  3000
   {{- end }}
 ---
-{{- end }}
