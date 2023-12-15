@@ -47,7 +47,7 @@ spec:
         path: /
         backend:
           service:
-            name:  {{ .Chart.Name }}-service-web
+            name:  {{ $.Chart.Name }}-service-web
             port:
               number:  3000
   {{- end }}

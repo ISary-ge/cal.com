@@ -1,4 +1,4 @@
-export TAG=1.007
+export TAG=1.008
 export APPNAME=calendar
 export NAMESPACE=calendar
 

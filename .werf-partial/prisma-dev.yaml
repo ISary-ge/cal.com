@@ -1,4 +1,4 @@
-{{- if or (eq .env "dev") }}
+{{- if or (eq .env "dev1") }}
 ---
 image: {{ .project }}-prisma-{{ .env }}
 from: node:20-alpine
