@@ -32,7 +32,7 @@ spec:
       - name: workspace
         hostPath:
           path: /.volumes/calendar-web-dev-workspace
-     - name: id-rsa-vcs
+      - name: id-rsa-vcs
         secret:
           secretName: id-rsa-vcs
           defaultMode: 0600
