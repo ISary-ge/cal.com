@@ -1,5 +1,4 @@
-{{- if  (eq .Values.global.env "dev") }}
-{{- else }}
+{{- if  (ne .Values.global.env "dev") }}
 {{- $replicaCount := index .Values (env "ENVNAME") "replicaCount" -}}
 apiVersion: apps/v1
 kind: Deployment

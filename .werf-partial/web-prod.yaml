@@ -1,4 +1,4 @@
-{{- if or (eq .env "prod") }}
+{{- if or (eq .env "stage") (eq .env "prod") (eq .env "euprod") }}
 ---
 image: {{ .project }}-web-{{ .env }}
 from: node:20-alpine
@@ -19,22 +19,21 @@ git:
     - "git-setup.sh"
 ansible:
   install:
-  - name: "Install yarn"
-    shell: npx turbo prune --scope=@calcom/web --docker
+  - name: "prune web"
+    shell: npx turbo prune --scope=@calcom/web
     args:
      chdir: /workspace/calendar
-  - name: "Install libs"
-    shell: yarn add && yarn install
+  - name: "install packages"
+    shell: yarn workspace @calcom/web add
     args:
      chdir: /workspace/calendar
   setup:
-  - name: "Compile"
-    shell: yarn turbo run build --filter=@calcom/web
+  - name: "build web"
+    shell: npm run build
     args:
      chdir: /workspace/calendar
 docker:
   WORKDIR: /workspace/calendar
   EXPOSE: ["3000"]
-  CMD: ["npm", "run", "start"]
+  ENTRYPOINT: "npm run start"
 {{- end }}
-

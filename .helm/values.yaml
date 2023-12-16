@@ -27,25 +27,34 @@ dev:
   NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS: "help@cal.com"
   NEXT_PUBLIC_COMPANY_NAME: "Mcn.ru, Inc."
 stage:
-  vpbxApiUrl: https://vpbx-stage.mcn.ru/vpbx/api
-  phoneApiUrl: https://vpbx-stage.mcn.ru/phone/api
-  baseApiUrl: https://base-stage.mcn.ru/api/private/api
-  statApiUrl: https://teststat2.mcn.ru
-  referencesApiUrl: https://references-stage.mcn.ru/api/private
-  paidMethodsApiUrl: "https://paidmethods.mcn.ru/api/private/api"
-  apiAccountId: 47197
-  kafkaBrokers: '["kafka-stage-kafka-bootstrap.kafka-broker:9092"]'
-  kafkaClientId: shop-stage
-  kafkaGroupId: shop-stage
-  apiReplicaCount: 1
-  schedulerReplicaCount: 1
-  keydbReplicaCount: 1
-  keydbHost: keydb-stage
-  keydbPort: 6379
-  keydbMicroserviceDb: 1
-  keydbCacheDb: 2
+  replicaCount: 1
   nextauthSecret: "FqU+PtBMpUiAHvICKvMuV8bu4MOFdZC0Mv7On9qxIVw="
-  DATABASE_URL: "postgresql://platforma:0w3Jb1rmA6WssJUy@eridanus4.mcn.ru:5432/calendso"
+  calendsoEncryptionKey: "FqU+PtBMpUiAHvICKvMuV8bu4MOFdZC0Mv7On9qxIVw="
+  calcomLicenseKey: ""
+  databaseUrl: "postgresql://platforma:0w3Jb1rmA6WssJUy@eridanus4.mcn.ru:5432/calendso"
+  upstashRedisRestUrl: ""
+  upstashRedisRestToken: ""
+  insightsDatabaseUrl: ""
+  PRISMA_GENERATE_DATAPROXY: ""
+  NEXT_PUBLIC_WEBAPP_URL: 'http://calendar-stage.mcn.ru'
+  NEXT_PUBLIC_WEBSITE_URL: 'http://calendar-stage.mcn.ru'
+  NEXT_PUBLIC_CONSOLE_URL: 'http://localhost:3004'
+  NEXT_PUBLIC_EMBED_LIB_URL: 'http://calendar-stage.mcn.ru/embed/embed.js'
+  ALLOWED_HOSTNAMES: '"mcn.ru","mcn.loc", "localhost:3000"'
+  RESERVED_SUBDOMAINS: '"app","auth","docs","design","console","go","status","api","saml","www","matrix","developer","cal","my","team","support","security","blog", "calendar-stage","learn","admin"'
+  NEXTAUTH_URL: 'http://calendar-stage.mcn.ru'
+  NEXTAUTH_COOKIE_DOMAIN: ''
+  CALCOM_TELEMETRY_DISABLED: ''
+  CRON_API_KEY: '0cc0e6c35519bba620c9360cfe3e68d0'
+  CRON_ENABLE_APP_SYNC: false
+  NEXT_PUBLIC_INTERCOM_APP_ID: ""
+  GOOGLE_LOGIN_ENABLED: false
+  EMAIL_FROM: 'notifications@yourselfhostedcal.com'
+  EMAIL_SERVER_HOST: 'localhost'
+  EMAIL_SERVER_PORT: 1025
+  NEXT_PUBLIC_APP_NAME: "CalendarMCN"
+  NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS: "help@cal.com"
+  NEXT_PUBLIC_COMPANY_NAME: "Mcn.ru, Inc."
 prod:
   vpbxApiUrl: https://vpbx.mcn.ru/vpbx/api
   phoneApiUrl: https://vpbx.mcn.ru/phone/api

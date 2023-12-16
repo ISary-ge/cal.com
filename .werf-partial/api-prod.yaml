@@ -1,4 +1,4 @@
-{{- if or (eq .env "stage") (eq .env "prod") (eq .env "euprod") }}
+{{- if or (eq .env "stage1") (eq .env "prod1") (eq .env "euprod1") }}
 ---
 image: {{ .project }}-api-{{ .env }}
 from: node:18

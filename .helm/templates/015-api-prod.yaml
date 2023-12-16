@@ -1,5 +1,4 @@
-{{- if  (eq .Values.global.env "dev") }}
-{{- else }}
+{{- if  (eq .Values.global.env "devas1") }}
 {{- $replicaCount := index .Values (env "ENVNAME") "replicaCount" -}}
 apiVersion: apps/v1
 kind: Deployment
@@ -52,6 +51,4 @@ spec:
   - name: {{ .Chart.Name }}-api-prod
     port: 80
     protocol: TCP
-
-
 {{- end }}

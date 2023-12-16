@@ -46,7 +46,7 @@ spec:
           containerPort: 5432
           protocol: TCP  
 ---
-{{- if  (eq .Values.global.env "dev1") }}
+{{- if  (eq .Values.global.env "stage") }}
 apiVersion: batch/v1
 kind: Job
 metadata:
