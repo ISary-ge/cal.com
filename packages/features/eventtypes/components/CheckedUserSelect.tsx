@@ -22,7 +22,7 @@ export const CheckedUserSelect = ({
 }) => {
   const { t } = useLocale();
 
-  const [animationRef] = useAutoAnimate<HTMLUListElement>();
+  const animationRef: any = useAutoAnimate<HTMLUListElement>();
 
   return (
     <>

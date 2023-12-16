@@ -582,7 +582,7 @@ const IntervalLimitsManager = <K extends "durationLimits" | "bookingLimits">({
   const watchIntervalLimits = watch(propertyName);
   const { t } = useLocale();
 
-  const [animateRef] = useAutoAnimate<HTMLUListElement>();
+  const animateRef: any = useAutoAnimate<HTMLUListElement>();
 
   return (
     <Controller

@@ -2,6 +2,8 @@
 import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
 import type { Session } from "next-auth";
 import type { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import logger from "@calcom/lib/logger";
+
 
 import { getLocale } from "@calcom/features/auth/lib/getLocale";
 import getIP from "@calcom/lib/getIP";
@@ -53,6 +55,7 @@ export type GetSessionFn =
  * @see https://trpc.io/docs/context#inner-and-outer-context
  */
 export async function createContextInner(opts: CreateInnerContextOptions) {
+  const log = logger.getSubLogger({ prefix: ["[LOG]"] });
   return {
     prisma,
     insightsDb: readonlyPrisma,
@@ -69,8 +72,10 @@ export const createContext = async ({ req, res }: CreateContextOptions, sessionG
 
   // This type may not be accurate if this request is coming from SSG init but they both should satisfy the requirements of getIP.
   // TODO: @sean - figure out a way to make getIP be happy with trpc req. params
+  // logger.warn('------asdas-')
   const sourceIp = getIP(req as NextApiRequest);
   const session = !!sessionGetter ? await sessionGetter({ req, res }) : null;
+  
   const contextInner = await createContextInner({ locale, session, sourceIp });
   return {
     ...contextInner,

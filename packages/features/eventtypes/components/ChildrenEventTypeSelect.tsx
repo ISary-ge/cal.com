@@ -37,7 +37,7 @@ export const ChildrenEventTypeSelect = ({
 }) => {
   const { t } = useLocale();
   const orgBranding = useOrgBranding();
-  const [animationRef] = useAutoAnimate<HTMLUListElement>();
+  const animationRef: any = useAutoAnimate<HTMLUListElement>();
 
   return (
     <>

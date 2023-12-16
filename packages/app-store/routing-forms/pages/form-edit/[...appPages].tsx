@@ -88,7 +88,7 @@ function Field({
   appUrl: string;
 }) {
   const { t } = useLocale();
-  const [animationRef] = useAutoAnimate<HTMLUListElement>();
+  const animationRef: any = useAutoAnimate<HTMLUListElement>();
 
   const [options, setOptions] = useState<SelectOption[]>([
     { placeholder: "< 10", value: "", id: uuidv4() },

@@ -18,12 +18,31 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: 100m
     nginx.ingress.kubernetes.io/auth-method: "GET"
     nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
-    nginx.ingress.kubernetes.io/auth-url: http://base-service-smallauth.base-{{ .Values.global.env }}.svc.cluster.local/auth-public
+    nginx.ingress.kubernetes.io/auth-url: http://base-service-smallauth.base-{{ .Values.global.env }}.svc.cluster.local/auth
     nginx.ingress.kubernetes.io/auth-response-headers: "MCN-ACCOUNT-ID, MCN-USER-ID, MCN-USER-LANG, MCN-SUPPORT-USER-ID"
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "300"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
     ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/server-snippet: |
+      location @fallback {
+        if ($request_uri ~ \.*.){
+         set $and 1;
+        }
+
+        if ($and = 11) {
+          return https://$host/{{ $publicPrefix }}$request_uri;
+        }
+        return 'https://base{{ ternary "-stage" "" (eq .Values.global.env "stage")}}.$rootDomain/auth/login';
+      }
+
+      set $rootDomain '';
+
+      if ($host ~ (?:(?<subdomain>\w*)\.)?(?<domain>\w+)\.(?<tld>(?:\w+\.?)+)$){
+        set $rootDomain "${domain}.${tld}";
+      }
+
+      error_page 401 =  @fallback;
     nginx.ingress.kubernetes.io/configuration-snippet: |
       if ($http_origin ~ '^https:\/\/(.*)?\.?({{ print (join "|" (prepend $domains (env "DOMAIN"))) }})$' ) {
         more_set_headers "Access-Control-Allow-Origin: $http_origin";

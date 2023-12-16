@@ -165,7 +165,7 @@ export const EventSetupTab = (
       name: "locations",
     });
 
-    const [animationRef] = useAutoAnimate<HTMLUListElement>();
+    const animationRef: any = useAutoAnimate<HTMLUListElement>();
 
     const validLocations = formMethods.getValues("locations").filter((location) => {
       const eventLocation = getEventLocationType(location.type);

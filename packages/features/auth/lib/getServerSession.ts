@@ -31,16 +31,21 @@ export async function getServerSession(options: {
 }) {
   const { req, authOptions: { secret } = {} } = options;
 
-  const token = await getToken({
-    req,
-    secret,
-  });
+  // const token = await getToken({
+  //   req,
+  //   secret,
+  // });
 
-  if (!token || !token.email || !token.sub) {
-    return null;
-  }
+  const mcnUidToken = req.cookies['mcn_uid'];
+  const mcnUserId = +(req.headers['mcn-user-id'] as string);
 
-  const cachedSession = CACHE.get(JSON.stringify(token));
+  console.log('TOKEEEEn', req.cookies, mcnUserId);
+
+  // if (!token || !token.email || !token.sub) {
+  //   return null;
+  // }
+
+  const cachedSession = CACHE.get(JSON.stringify(mcnUidToken));
 
   if (cachedSession) {
     return cachedSession;
@@ -48,7 +53,8 @@ export async function getServerSession(options: {
 
   const user = await prisma.user.findUnique({
     where: {
-      email: token.email.toLowerCase(),
+      id: mcnUserId,
+      // email: token.email.toLowerCase(),
     },
     // TODO: Re-enable once we get confirmation from compliance that this is okay.
     // cacheStrategy: { ttl: 60, swr: 1 },
@@ -58,11 +64,11 @@ export async function getServerSession(options: {
     return null;
   }
 
-  const hasValidLicense = await checkLicense(prisma);
+  // const hasValidLicense = await checkLicense(prisma);
 
   const session: Session = {
-    hasValidLicense,
-    expires: new Date(typeof token.exp === "number" ? token.exp * 1000 : Date.now()).toISOString(),
+    hasValidLicense: true,
+    expires: new Date(Date.now() + 1000000).toISOString(),
     user: {
       id: user.id,
       name: user.name,
@@ -72,14 +78,18 @@ export async function getServerSession(options: {
       email_verified: user.emailVerified !== null,
       role: user.role,
       image: `${CAL_URL}/${user.username}/avatar.png`,
-      impersonatedByUID: token.impersonatedByUID ?? undefined,
-      belongsToActiveTeam: token.belongsToActiveTeam,
-      org: token.org,
+      // impersonatedByUID: token.impersonatedByUID ?? undefined,
+      impersonatedByUID: undefined,
+      // belongsToActiveTeam: token.belongsToActiveTeam,
+      belongsToActiveTeam: false,
+      // org: token.org,
+      org: undefined,
       locale: user.locale ?? undefined,
     },
   };
 
-  CACHE.set(JSON.stringify(token), session);
+  CACHE.set(JSON.stringify(mcnUidToken), session);
 
+  console.log('SESSSION GETSERVERSESSION', session)
   return session;
 }
