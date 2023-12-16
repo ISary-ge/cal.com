@@ -35,7 +35,7 @@ export function defaultCookies(useSecureCookies: boolean): CookiesOptions {
   };
   return {
     sessionToken: {
-      name: `${cookiePrefix}next-auth.session-token`,
+      name: `mcn_uid`,
       options: {
         ...defaultOptions,
         httpOnly: true,

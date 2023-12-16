@@ -1,6 +1,6 @@
 {{- if or (eq .env "stage") (eq .env "prod") (eq .env "euprod") }}
 ---
-image: {{ .project }}-web-{{ .env }}
+image: {{ .project }}-web-prod
 from: node:20-alpine
 git:
 - add: /

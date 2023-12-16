@@ -46,7 +46,8 @@ spec:
           containerPort: 5432
           protocol: TCP  
 ---
-{{- if  (eq .Values.global.env "stage") }}
+{{- end }}
+{{- if  (eq .Values.global.env "sta2ge") }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -82,5 +83,4 @@ spec:
         - name: DATABASE_URL
           value: "postgresql://postgres:@calendar-service-pg.calendar-dev.svc.cluster.local:5450/calendso"
       restartPolicy: Never
-{{- end }}
 {{- end }}

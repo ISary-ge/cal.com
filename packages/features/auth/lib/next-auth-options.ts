@@ -422,6 +422,7 @@ export const AUTH_OPTIONS: AuthOptions = {
   providers,
   callbacks: {
     async jwt({ token, user, account, trigger, session }) {
+      console.log("CALLBACK JWT", { token, user, account, trigger, session });
       if (trigger === "update") {
         return {
           ...token,
@@ -551,6 +552,7 @@ export const AUTH_OPTIONS: AuthOptions = {
       return token;
     },
     async session({ session, token }) {
+      console.log("CALLBACK SESSION", { token, user, account, trigger, session });
       const hasValidLicense = await checkLicense(prisma);
       const calendsoSession: Session = {
         ...session,

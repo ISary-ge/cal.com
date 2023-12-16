@@ -1,9 +1,7 @@
 import { LRUCache } from "lru-cache";
 import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
 import type { AuthOptions, Session } from "next-auth";
-import { getToken } from "next-auth/jwt";
 
-import checkLicense from "@calcom/features/ee/common/server/checkLicense";
 import { CAL_URL } from "@calcom/lib/constants";
 import prisma from "@calcom/prisma";
 
@@ -36,10 +34,10 @@ export async function getServerSession(options: {
   //   secret,
   // });
 
-  const mcnUidToken = req.cookies['mcn_uid'];
-  const mcnUserId = +(req.headers['mcn-user-id'] as string);
+  const mcnUidToken = req.cookies["mcn_uid"];
+  const mcnUserId = +(!isNaN(req.headers["mcn-user-id"]) ? req.headers["mcn-user-id"] : ("0" as string));
 
-  console.log('TOKEEEEn', req.cookies, mcnUserId);
+  console.log("TOKEEEEn", req.cookies, mcnUserId);
 
   // if (!token || !token.email || !token.sub) {
   //   return null;
@@ -68,7 +66,7 @@ export async function getServerSession(options: {
 
   const session: Session = {
     hasValidLicense: true,
-    expires: new Date(Date.now() + 1000000).toISOString(),
+    expires: new Date("2024-12-15T22:39:30.465Z").toISOString(),
     user: {
       id: user.id,
       name: user.name,
@@ -90,6 +88,6 @@ export async function getServerSession(options: {
 
   CACHE.set(JSON.stringify(mcnUidToken), session);
 
-  console.log('SESSSION GETSERVERSESSION', session)
+  console.log("SESSSION GETSERVERSESSION", session);
   return session;
 }
