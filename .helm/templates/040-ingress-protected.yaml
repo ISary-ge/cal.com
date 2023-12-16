@@ -30,9 +30,6 @@ metadata:
          set $and 1;
         }
 
-        if ($and = 11) {
-          return https://$host/{{ $publicPrefix }}$request_uri;
-        }
         return 'https://base{{ ternary "-stage" "" (eq .Values.global.env "stage")}}.$rootDomain/auth/login';
       }
 
