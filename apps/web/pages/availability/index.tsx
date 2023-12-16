@@ -89,7 +89,7 @@ export function AvailabilityList({ schedules }: RouterOutputs["viewer"]["availab
 
   // Adds smooth delete button - item fades and old item slides into place
 
-  const animationParentRef: any = useAutoAnimate<HTMLUListElement>();
+  const [animationParentRef] = useAutoAnimate<HTMLUListElement>();
 
   return (
     <>

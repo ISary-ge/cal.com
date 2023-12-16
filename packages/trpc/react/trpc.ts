@@ -67,7 +67,7 @@ export const trpc = createTRPCNext<AppRouter, NextPageContext, "ExperimentalSusp
       links: [
         // adds pretty logs to your console in development and logs errors in production
         loggerLink({
-          enabled: (opts) => true || (opts.direction === "down" && opts.result instanceof Error),
+          enabled: (opts) => true,
         }),
         splitLink({
           // check for context property `skipBatch`

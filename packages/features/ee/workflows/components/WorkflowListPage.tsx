@@ -58,7 +58,7 @@ export default function WorkflowListPage({ workflows }: Props) {
   const utils = trpc.useContext();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [workflowToDeleteId, setwWorkflowToDeleteId] = useState(0);
-  const parent: any = useAutoAnimate<HTMLUListElement>();
+  const [parent] = useAutoAnimate<HTMLUListElement>();
   const router = useRouter();
 
   const orgBranding = useOrgBranding();

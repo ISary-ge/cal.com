@@ -86,7 +86,7 @@ export default function RoutingForms({
   const routerQuery = useRouterQuery();
   const hookForm = useFormContext<RoutingFormWithResponseCount>();
   const utils = trpc.useContext();
-  const parent: any = useAutoAnimate<HTMLUListElement>();
+  const [parent] = useAutoAnimate<HTMLUListElement>();
 
   const mutation = trpc.viewer.routingFormOrder.useMutation({
     onError: async (err) => {

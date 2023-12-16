@@ -19,12 +19,12 @@ git:
     - "git-setup.sh"
 ansible:
   install:
-  - name: "prune web"
-    shell: npx turbo prune --scope=@calcom/web
-    args:
-     chdir: /workspace/calendar
   - name: "install packages"
     shell: yarn workspace @calcom/web add
+    args:
+     chdir: /workspace/calendar
+  - name: "prune web"
+    shell: npx turbo prune --scope=@calcom/web
     args:
      chdir: /workspace/calendar
   setup:

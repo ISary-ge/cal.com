@@ -69,7 +69,7 @@ export const FormBuilder = function FormBuilder({
   // I would have liked to give Form Builder it's own Form but nested Forms aren't something that browsers support.
   // So, this would reuse the same Form as the parent form.
   const fieldsForm = useFormContext<RhfForm>();
-  const parent: any = useAutoAnimate<HTMLUListElement>();
+  const [parent] = useAutoAnimate<HTMLUListElement>();
   const { t } = useLocale();
 
   const { fields, swap, remove, update, append } = useFieldArray({
@@ -307,7 +307,7 @@ function Options({
   className?: string;
   readOnly?: boolean;
 }) {
-  const animationRef: any = useAutoAnimate<HTMLUListElement>();
+  const [animationRef] = useAutoAnimate<HTMLUListElement>();
   if (!value) {
     onChange([
       {
