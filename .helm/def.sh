@@ -11,7 +11,7 @@ function dev()
 	CI_URL="$APPNAME-$ENVNAME.$DOMAIN"
 }
 
-function stage()
+function stage2()
 {
 	export ENVNAME=stage
 	export CLUSTER_IP=$(kubectl cluster-info | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" | head -1)
