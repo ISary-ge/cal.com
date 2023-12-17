@@ -1,3 +1,5 @@
+import type { NextApiRequest, NextApiResponse } from "next";
+
 import { getServerSession } from "@calcom/features/auth/lib/getServerSession";
 import { defaultResponder } from "@calcom/lib/server";
 
