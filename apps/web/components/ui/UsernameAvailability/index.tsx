@@ -47,6 +47,8 @@ export const UsernameAvailabilityField = ({
     ? orgBranding?.fullDomain.replace(/^(https?:|)\/\//, "")
     : `${CAL_URL?.replace(/^(https?:|)\/\//, "")}`;
 
+  console.log("USERNAME_PREFIXXX", orgBranding, usernamePrefix);
+
   return (
     <Controller
       control={formMethods.control}

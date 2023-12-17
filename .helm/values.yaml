@@ -52,7 +52,7 @@ stage:
   EMAIL_FROM: 'notifications@yourselfhostedcal.com'
   EMAIL_SERVER_HOST: 'localhost'
   EMAIL_SERVER_PORT: 1025
-  NEXT_PUBLIC_APP_NAME: "CalendarMCN"
+  NEXT_PUBLIC_APP_NAME: "Cal.com"
   NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS: "help@cal.com"
   NEXT_PUBLIC_COMPANY_NAME: "Mcn.ru, Inc."
 prod:
