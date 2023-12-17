@@ -35,9 +35,7 @@ export async function getServerSession(options: {
   // });
 
   const mcnUidToken = req.cookies["mcn_uid"];
-  const mcnUserId = +(!isNaN(req.headers["mcn-user-id"])
-    ? (req.headers["mcn-user-id"] as string)
-    : ("0" as string));
+  const mcnUserId = +(req.headers["mcn-user-id"] as string);
 
   console.log("TOKEEEEn", req.cookies, mcnUserId);
 
